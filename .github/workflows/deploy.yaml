@@ -3,10 +3,11 @@ on:
   push:
     branches:
       - main
-      inputs:
-        environment:
-          required: true
-          type: environment
+  workflow_dispatch:
+    inputs:
+      target-env:
+        required: true
+        type: environment
 
 jobs:
   job1:
@@ -30,7 +31,7 @@ jobs:
         curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
         chmod 700 get_helm.sh
         ./get_helm.sh
-        helm install hello-rh ./hello-rh -f ./hello-rh/{{ inputs.{{ github.events.inputs.environment }}-values.yaml --create-namespace --namespace={{ github.events.inputs.environment }}
+        helm install hello-rh ./hello-rh -f ./hello-rh/{{ inputs.{{ github.events.inputs.target-env }}-values.yaml --create-namespace --namespace={{ github.events.inputs.target-env }}
     - name: Test service URLs
       run: |
         minikube service list
