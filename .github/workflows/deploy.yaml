@@ -38,7 +38,7 @@ jobs:
         minikube service hello-rh --url
         echo "------------------opening the service------------------"
         curl $(minikube service example --url)       
-   Matrixdeploy:
+  Matrixdeploy:
     needs: job1
     strategy:
       fail-fast: true
