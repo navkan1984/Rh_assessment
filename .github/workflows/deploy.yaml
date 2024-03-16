@@ -4,14 +4,14 @@ on:
   push:
     branches:
       - main
-  workflow_call:
-    inputs:
-      target-env:
-        required: true
-        type: environment
 
 jobs:
-  job1:
+  Matrixdeploy:
+    strategy:
+      fail-fast: true
+      matrix:
+        target: [ qa, prod ]
+  deploy:
     runs-on: ubuntu-latest
     name: build example and deploy to minikube
     steps:
@@ -32,20 +32,10 @@ jobs:
         curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
         chmod 700 get_helm.sh
         ./get_helm.sh
-        helm install hello-rh ./hello-rh -f ./hello-rh/{{ inputs.{{ github.events.inputs.target-env }}-values.yaml --create-namespace --namespace={{ github.events.inputs.target-env }}
+        helm install hello-rh ./hello-rh -f ./hello-rh/{{ matrix.target }}-values.yaml --create-namespace --namespace={{ matrix.target }}
     - name: Test service URLs
       run: |
         minikube service list
         minikube service hello-rh --url
         echo "------------------opening the service------------------"
         curl $(minikube service example --url)       
-  Matrixdeploy:
-    needs: job1
-    strategy:
-      fail-fast: true
-      matrix:
-        target: [ qa, prod ]
-    uses: ./.github/workflows/deploy.yaml
-    with:
-      target-env: ${ { matrix.target } }
-    secrets: inherit
