@@ -35,6 +35,7 @@ jobs:
     - name: Test service URLs
       run: |
         minikube service list
+        kubectl get pods -A
         minikube service hello-rh --url -n ${{ matrix.target }}
         echo "------------------opening the service------------------"
         curl $(minikube service hello-rh --url -n  ${{ matrix.target }})       
