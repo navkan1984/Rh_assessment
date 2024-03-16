@@ -1,9 +1,10 @@
 name: deploy
 on:
   push:
-  - main
-    inputs:
-      environment:
+    branches:
+      - main
+      inputs:
+        environment:
           required: true
           type: environment
 
