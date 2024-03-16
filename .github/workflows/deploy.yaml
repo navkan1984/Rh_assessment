@@ -1,9 +1,10 @@
-name: deploy
+name: deploy hello world
+
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
+  workflow_call:
     inputs:
       target-env:
         required: true
@@ -43,7 +44,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        target: [qa, prod ]
+        target: [ qa, prod ]
     uses: ./.github/workflows/deploy.yaml
     with:
       target-env: ${ { matrix.target } }
