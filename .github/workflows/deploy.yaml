@@ -1,7 +1,7 @@
 name: deploy
 on:
   push:
-    - main
+  - main
     inputs:
       environment:
           required: true
