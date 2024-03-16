@@ -35,6 +35,6 @@ jobs:
     - name: Test service URLs
       run: |
         minikube service list
-        minikube service hello-rh --url -n hello-rh
+        minikube service hello-rh --url -n ${{ matrix.target }}
         echo "------------------opening the service------------------"
         curl $(minikube service example --url)       
