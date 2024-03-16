@@ -35,7 +35,6 @@ jobs:
     - name: Test service URLs
       run: |
         minikube service list
-        kubectl get pods -A
         sleep 60
         kubectl get pods -A
         minikube service hello-rh --url -n ${{ matrix.target }}
