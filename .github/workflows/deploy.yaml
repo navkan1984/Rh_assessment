@@ -37,4 +37,4 @@ jobs:
         minikube service list
         minikube service hello-rh --url -n ${{ matrix.target }}
         echo "------------------opening the service------------------"
-        curl $(minikube service example --url)       
+        curl $(minikube service hello-rh --url -n  ${{ matrix.target }})       
